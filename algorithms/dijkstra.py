@@ -16,7 +16,7 @@ def run_dijkstra(graph_data, start_node, end_node):
 
     # ===== BUILD ADJACENCY LIST =====
     # Create an adjacency list representation of the graph for fast neighbor lookup
-    # adj[0] = [(1, 5), (2, 3)] means node 0 connects to nodes 1 and 2 with weights 5 and 3
+    # Ex: adj[0] = [(1, 5), (2, 3)] means node 0 connects to nodes 1 and 2 with weights 5 and 3
     adj = {i: [] for i in range(num_vertices)}
     for edge in edges:
         # Add each edge to the source node's adjacency list
@@ -27,9 +27,8 @@ def run_dijkstra(graph_data, start_node, end_node):
     parent = {i: -1 for i in range(num_vertices)}  # Previous node in shortest path (for reconstruction)
     dist[start_node] = 0  # Distance to start node is 0
     
-    # ===== PRIORITY QUEUE AND STEP COUNTER =====
-    pq = [(0, start_node)]  # Min-heap: (distance, node_index). Start with source at distance 0
-    steps = 0  # Counter to track computational steps for statistics
+    pq = [(0, start_node)]  
+    steps = 0  
 
     # ===== MAIN ALGORITHM LOOP =====
     while pq:

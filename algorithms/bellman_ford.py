@@ -30,7 +30,6 @@ def run_bellman_ford(graph_data, start_node, end_node):
             u, v, w = edge["source"], edge["destination"], edge["weight"]
             
             # Check if we found a shorter path to node v through node u
-            # dist[u] != inf check: only proceed if u has been reached
             if dist[u] != float('inf') and dist[u] + w < dist[v]:
                 # Update distance to v
                 dist[v] = dist[u] + w
