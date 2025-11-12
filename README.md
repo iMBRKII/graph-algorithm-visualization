@@ -29,7 +29,7 @@ git clone https://github.com/iMBRKII/graph-algorithm-visualization
 
     ```bash
     python -m venv venv
-    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+    source venv/bin/activate
     ```
 
 2.  **Install the dependencies:**
