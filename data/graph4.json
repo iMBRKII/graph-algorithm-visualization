@@ -1,0 +1,12 @@
+{
+  "imagePath": "assets/graph1.png",
+  "hasNegativeWeights": true,
+  "nodeNames": ["A", "B", "C", "D", "E"],
+  "edges": [
+    {"source": 0, "destination": 1, "weight": 2},
+    {"source": 0, "destination": 3, "weight": 9},
+    {"source": 1, "destination": 2, "weight": 6},
+    {"source": 1, "destination": 4, "weight": 4},
+    {"source": 2, "destination": 3, "weight": -1}
+  ]
+}
