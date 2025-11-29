@@ -8,15 +8,15 @@ def run_bellman_ford(graph_data, start_node, end_node):
     Space Complexity: O(V)
     """
     # Extract graph information
-    node_names = graph_data["nodeNames"]  # List of node labels
-    edges = graph_data["edges"]  # List of all edges with source, destination, weight
-    num_vertices = len(node_names)  # Total number of nodes
+    node_names = graph_data["nodeNames"]
+    edges = graph_data["edges"]
+    num_vertices = len(node_names)
 
     # ===== INITIALIZE DISTANCES AND TRACKING =====
     dist = {i: float('inf') for i in range(num_vertices)}  # Distance to each node (start as infinity)
     parent = {i: -1 for i in range(num_vertices)}  # Previous node in shortest path (for reconstruction)
     dist[start_node] = 0  # Distance to start node is 0
-    steps = 0  # Counter to track computational steps
+    steps = 0
 
     # ===== MAIN RELAXATION LOOP =====
     # Repeat (V-1) times to ensure all shortest paths are found
@@ -46,7 +46,7 @@ def run_bellman_ford(graph_data, start_node, end_node):
         if dist[u] != float('inf') and dist[u] + w < dist[v]:
             return f"Negative weight cycle detected.\nCannot calculate shortest path.\n\nComputational Steps: {steps}"
 
-    # ===== PATH RECONSTRUCTION =====
+
     # Check if a path to the end node was found
     if dist[end_node] == float('inf'):
         return f"No path found from {node_names[start_node]} to {node_names[end_node]}.\n\nComputational Steps: {steps}"
@@ -55,12 +55,9 @@ def run_bellman_ford(graph_data, start_node, end_node):
     path = []
     curr = end_node
     while curr != -1:
-        # Add node name to path
         path.append(node_names[curr])
-        # Move to parent node
         curr = parent[curr]
-    # Reverse to get path from start to end (we built it backwards)
+
     path.reverse()
 
-    # Return the result: shortest path, total cost, and number of steps
     return f"Path: {' -> '.join(path)}\nTotal Cost: {dist[end_node]}\n\nComputational Steps: {steps}"

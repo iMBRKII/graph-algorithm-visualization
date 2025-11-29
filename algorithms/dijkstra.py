@@ -10,9 +10,9 @@ def run_dijkstra(graph_data, start_node, end_node):
     Space Complexity: O(V + E)
     """
     # Extract graph information
-    node_names = graph_data["nodeNames"]  # List of node labels (e.g., ["A", "B", "C"])
-    edges = graph_data["edges"]  # List of edge objects with source, destination, weight
-    num_vertices = len(node_names)  # Total number of nodes
+    node_names = graph_data["nodeNames"]
+    edges = graph_data["edges"]
+    num_vertices = len(node_names)  
 
     # ===== BUILD ADJACENCY LIST =====
     # Create an adjacency list representation of the graph for fast neighbor lookup
@@ -40,7 +40,6 @@ def run_dijkstra(graph_data, start_node, end_node):
         if u == end_node:
             break
 
-        # Skip outdated entries in the priority queue
         # If this distance is worse than our best known distance, skip it
         if d > dist[u]:
             continue
@@ -58,7 +57,7 @@ def run_dijkstra(graph_data, start_node, end_node):
                 # Add v to priority queue with new distance for processing
                 heapq.heappush(pq, (dist[v], v))
 
-    # ===== PATH RECONSTRUCTION =====
+
     # Check if a path to the end node was found
     if dist[end_node] == float('inf'):
         return f"No path found from {node_names[start_node]} to {node_names[end_node]}.\n\nComputational Steps: {steps}"
@@ -67,12 +66,9 @@ def run_dijkstra(graph_data, start_node, end_node):
     path = []
     curr = end_node
     while curr != -1:
-        # Add node name to path
         path.append(node_names[curr])
-        # Move to parent node
         curr = parent[curr]
-    # Reverse to get path from start to end (we built it backwards)
+
     path.reverse()
 
-    # Return the result: shortest path, total cost, and number of steps
     return f"Path: {' -> '.join(path)}\nTotal Cost: {dist[end_node]}\n\nComputational Steps: {steps}"

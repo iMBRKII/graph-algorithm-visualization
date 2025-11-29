@@ -7,12 +7,8 @@ class DisjointSet:
     Time Complexity: Nearly O(1) amortized per operation
     """
     def __init__(self, n):
-        """
-        Initialize DSU with n elements.
-        Each element is initially its own parent (separate set).
-        """
-        self.parent = list(range(n))  # parent[i] = i initially (each element is its own set)
-        self.steps = 0  # Counter for computational steps
+        self.parent = list(range(n)) 
+        self.steps = 0 
 
     def find(self, i):
         """
@@ -20,21 +16,16 @@ class DisjointSet:
         Uses path compression: directly links i to its root for future O(1) lookups.
         """
         self.steps += 2
-        # Base case: if i is its own parent, it's the root
+        
         if self.parent[i] == i:
             return i
-        # Recursively find root and compress the path
+        
         self.parent[i] = self.find(self.parent[i])
         return self.parent[i]
 
     def union(self, i, j):
-        """
-        Union the sets containing elements i and j.
-        Returns True if union was successful (different sets merged).
-        Returns False if they were already in the same set.
-        """
         self.steps += 1
-        # Find roots of both elements
+        
         root_i = self.find(i)
         root_j = self.find(j)
         
@@ -54,26 +45,26 @@ def run_kruskal(graph_data):
     Time Complexity: O(E log E) where E = number of edges
     Space Complexity: O(V + E) where V = vertices
     """
-    # Extract graph information
-    node_names = graph_data["nodeNames"]  # List of node labels
-    edges = graph_data["edges"]  # List of all edges with source, destination, weight
-    num_vertices = len(node_names)  # Total number of nodes
     
-    steps = 0  # Counter for computational steps
+    # Extract graph information
+    node_names = graph_data["nodeNames"] 
+    edges = graph_data["edges"]
+    num_vertices = len(node_names)
+    steps = 0 
     
     # ===== SORT EDGES BY WEIGHT =====
     # Sort all edges in ascending order by weight
     # This ensures we try to add the smallest edges first (greedy approach)
     sorted_edges = sorted(edges, key=lambda item: item['weight'])
-    steps += len(sorted_edges) * (len(sorted_edges) - 1) // 2  # Approximate sort cost (comparison-based sort)
+    steps += len(sorted_edges) * (len(sorted_edges) - 1) // 2
     
     # ===== INITIALIZE DISJOINT SET =====
     # Create DSU to track which nodes are connected
     dsu = DisjointSet(num_vertices)
     
     # Track the MST edges and total weight
-    mst = []  # Edges selected for the MST
-    total_weight = 0  # Sum of all edge weights in MST
+    mst = []
+    total_weight = 0  
 
     # ===== MAIN KRUSKAL LOOP =====
     # Try to add each edge to the MST (in order of increasing weight)
@@ -82,22 +73,16 @@ def run_kruskal(graph_data):
         # Try to union the two nodes of this edge
         # Returns True if they weren't already connected (no cycle would form)
         if dsu.union(edge["source"], edge["destination"]):
-            # Add this edge to the MST (it doesn't create a cycle)
             mst.append(edge)
-            # Add its weight to the total
             total_weight += edge["weight"]
-            # Note: MST of a graph with V vertices always has exactly V-1 edges
 
-    # Add the steps from DSU operations to total
     steps += dsu.steps
 
-    # ===== FORMAT AND RETURN OUTPUT =====
+
     output = "Minimum Spanning Tree Edges:\n"
-    # Print each edge in the MST with its weight
     for edge in mst:
         output += f"{node_names[edge['source']]} - {node_names[edge['destination']]} ({edge['weight']})\n"
     
-    # Add summary information
     output += f"\nTotal Weight: {total_weight}\n"
     output += f"\nComputational Steps: {steps}"
     
